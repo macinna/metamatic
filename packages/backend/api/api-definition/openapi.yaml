@@ -1,0 +1,215 @@
+openapi: 3.0.3
+info:
+  title: Metamatic API
+  description: |
+    API for Metamatic backend services including authentication, user management, and order processing.
+  version: 1.0.0
+  contact:
+    name: Metamatic Team
+
+servers:
+  - url: https://{api-gateway-id}.execute-api.{region}.amazonaws.com/{stage}
+    description: AWS API Gateway
+    variables:
+      api-gateway-id:
+        default: 'your-api-gateway-id'
+      region:
+        default: 'us-east-1'
+      stage:
+        default: 'dev'
+        enum:
+          - dev
+          - staging
+          - prod
+
+paths:
+  /auth:
+    post:
+      summary: Authenticate user
+      description: Authenticate a user and return a JWT token
+      operationId: authenticateUser
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users:
+    get:
+      summary: Get user information
+      description: Retrieve user information
+      operationId: getUsers
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: query
+          description: User ID to retrieve
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User information retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /orders:
+    get:
+      summary: Get order information
+      description: Retrieve order information for a customer
+      operationId: getOrders
+      tags:
+        - Orders
+      parameters:
+        - name: customerId
+          in: query
+          description: Customer ID
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Order information retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+        '400':
+          description: Request failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    AuthRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          example: "password123"
+
+    AuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Authentication successful"
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+    UserResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "User operation successful"
+        data:
+          type: object
+          properties:
+            userId:
+              type: string
+              example: "user-123"
+
+    OrderResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: "Orders retrieved successfully"
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: integer
+          example: 1234
+        customer_id:
+          type: integer
+          example: 123
+        items:
+          type: array
+          items:
+            type: string
+          example: ["smartphone", "smartphone USB-C charger", "smartphone black cover"]
+        date:
+          type: string
+          example: "20250607"
+        status:
+          type: string
+          example: "completed"
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          example: "An error occurred"
+        error_code:
+          type: string
+          example: "ERROR_CODE"
+        error_details:
+          type: object
+          additionalProperties: true
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - BearerAuth: []

@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Metamatic API
+
+  API Gateway and Lambda functions for Metamatic backend services
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.11
+    Environment:
+      Variables:
+        STAGE: !Ref Stage
+        LOG_LEVEL: INFO
+
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,PUT,DELETE,OPTIONS'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+      AllowOrigin: "'*'"
+
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+
+Resources:
+  # API Gateway
+  MetamaticApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Stage
+      DefinitionUri: ./api-definition/openapi.yaml
+
+  # Lambda Functions
+  AuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambdas/auth/
+      Handler: handler.lambda_handler
+      Events:
+        AuthApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref MetamaticApi
+            Path: /auth
+            Method: post
+
+Outputs:
+  MetamaticApi:
+    Description: "API Gateway endpoint URL for Metamatic API"
+    Value: !Sub "https://${MetamaticApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/"
+  AuthFunction:
+    Description: "Auth Lambda Function ARN"
+    Value: !GetAtt AuthFunction.Arn

@@ -1,0 +1,23 @@
+[project]
+name = "backend"
+version = "0.1.0"
+requires-python = ">=3.11"
+
+# Define development dependencies here.
+# These are shared across the whole project for linting, testing, etc.
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pytest",
+    "pre-commit",
+]
+
+# Workspace configuration - this tells UV to manage all Python packages in subdirectories
+[tool.uv.workspace]
+members = [
+    "api/lambdas/auth",
+    "agents/metamatic"
+]
+
+[tool.setuptools]
+packages = []

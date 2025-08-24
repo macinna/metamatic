@@ -1,0 +1,21 @@
+version = 0.1
+[default]
+[default.build.parameters]
+stack_name = "metamatic-api"
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+region = "us-east-1"
+parameter_overrides = "Stage=dev"
+
+[staging]
+[staging.deploy.parameters]
+stack_name = "metamatic-api-staging"
+parameter_overrides = "Stage=staging"
+
+[prod]
+[prod.deploy.parameters]
+stack_name = "metamatic-api-prod"
+parameter_overrides = "Stage=prod"
