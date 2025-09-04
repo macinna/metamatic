@@ -1,0 +1,39 @@
+# Node
+node_modules
+.next
+npm-debug.log
+*.log
+.pnp.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+*.egg-info/
+dist/
+build/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# UV
+uv.lock
+
+# Editor / OS
+.vscode/
+.DS_Store
+
+# AWS
+.aws/
+
+# SST 
+.sst/
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

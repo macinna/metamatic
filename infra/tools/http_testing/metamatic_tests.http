@@ -1,0 +1,96 @@
+# MetaMatic Agent HTTP Tests
+# Install the REST Client extension to use this file
+# You can click "Send Request" above each request to execute it
+
+@agentUrl = http://localhost:8080/invocations
+@sessionId = test-session-{{$timestamp}}
+
+### Test 1: New Activity Flow (Deterministic)
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "task": "start_new_activity_flow",
+    "activityId": "12345678",
+    "sessionId": "{{sessionId}}"
+}
+
+### Test 2: Chat Flow - Get Recent Activities
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "prompt": "Show me my recent activities",
+    "sessionId": "{{sessionId}}"
+}
+
+### Test 3: Chat Flow - Rename Activity
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "prompt": "Please rename activity 12345678 to 'Morning Miles Madness'",
+    "sessionId": "{{sessionId}}"
+}
+
+### Test 4: Chat Flow - Update Privacy
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "prompt": "Change the privacy of activity 12345678 to private",
+    "sessionId": "{{sessionId}}"
+}
+
+### Test 5: Chat Flow - Generate Creative Names
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "prompt": "Give me some creative name ideas for my latest running activity",
+    "sessionId": "{{sessionId}}"
+}
+
+### Test 6: Chat Flow - User Preferences
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "prompt": "What are my current preferences?",
+    "sessionId": "{{sessionId}}"
+}
+
+### Error Case 1: Missing ActivityId
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "task": "start_new_activity_flow",
+    "sessionId": "{{sessionId}}"
+}
+
+### Error Case 2: Missing SessionId
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "task": "start_new_activity_flow",
+    "activityId": "12345678"
+}
+
+### Error Case 3: Invalid Payload Structure
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "invalidField": "test"
+}
+
+### Error Case 4: Empty Prompt
+POST {{agentUrl}}
+Content-Type: application/json
+
+{
+    "prompt": "",
+    "sessionId": "{{sessionId}}"
+}

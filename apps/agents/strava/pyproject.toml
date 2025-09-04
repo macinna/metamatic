@@ -1,0 +1,19 @@
+[project]
+name = "metamatic-agent"
+version = "0.1.0"
+description = "Metamatic AI agent for customer support"
+requires-python = ">=3.11"
+
+dependencies = [
+    "strands-agents",
+    "strands-agents-tools",
+    "bedrock-agentcore",
+    "python-dotenv",
+    "pydantic",
+    "pytest",
+    "requests",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,11 @@
+{
+    "name": "metamatic-api-handlers",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "devDependencies": {
+        "@types/aws-lambda": "^8.10.129",
+        "@types/node": "^24.3.1",
+        "typescript": "^5.4.0"
+    }
+}

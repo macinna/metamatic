@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent_utils"
+version = "0.1.0"
+description = "Shared utilities for MetaMatic agents"
+requires-python = ">=3.11"
+dependencies = ["python-dotenv>=1.0.0"]
+#readme = "README.md"
+authors = [{ name = "MetaMatic" }]
+
+[tool.hatch.build]
+include = ["agent_utils/**/*.py"]

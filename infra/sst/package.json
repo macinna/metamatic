@@ -1,0 +1,20 @@
+{
+    "name": "metamatic-infra",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "sst dev --stage dev",
+        "deploy": "sst deploy",
+        "remove": "sst remove",
+        "lint": "echo 'no lint configured'"
+    },
+    "devDependencies": {
+        "@types/node": "^24.3.1",
+        "sst": "^3",
+        "typescript": "^5.4.0"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
