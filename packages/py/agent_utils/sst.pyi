@@ -9,6 +9,18 @@ class Resource:
     class App:
         name: str
         stage: str
+    class COGNITO_CLIENT_ID:
+        type: str
+        value: str
+    class COGNITO_CLIENT_SECRET:
+        type: str
+        value: str
+    class COGNITO_REGION:
+        type: str
+        value: str
+    class COGNITO_USER_POOL_ID:
+        type: str
+        value: str
     class JWT_SECRET:
         type: str
         value: str

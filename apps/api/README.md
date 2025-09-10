@@ -28,22 +28,22 @@ The table is named dynamically based on the deployment environment to ensure str
 The table's physical structure is defined in the SST infrastructure code. We only define the attributes that DynamoDB needs to manage its keys and indexes. All other attributes are managed by the application code (schema-on-read).
 
 * **Partition Key**: `user_id` (String) - The unique identifier for each user in the MetaMatic system.
-* **Global Secondary Index (GSI)**: `phoneNumber-index` - Allows for efficient lookups by the user's `phone_number`.
-* **Global Secondary Index (GSI)**: `stravaUserId-index` - Allows for efficient lookups by the user's `strava_user_id`.
+* **Global Secondary Index (GSI)**: `phoneNumber-index` - Allows for efficient lookups by the user's `phoneNumber`.
+* **Global Secondary Index (GSI)**: `stravaUserId-index` - Allows for efficient lookups by the user's `stravaUserId`.
 
 ### Main User Attributes (Managed by Application Code)
 
 | Field Name | Data Type | Description |
 | :--- | :--- | :--- |
-| `user_id` | String (UUID) | **Primary Key**. Unique MetaMatic user ID. |
-| `phone_number` | String | User's phone number in E.164 format. |
-| `strava_user_id` | Number | The user's unique numeric ID from Strava. |
-| `strava_refresh_token`| String | The long-lived, encrypted token for refreshing Strava access. |
-| `strava_token_expires_at`| Number | The Unix timestamp for when the current access token expires. |
-| `selected_voice_id` | String | The identifier for the user's chosen voice style. |
+| `userId` | String (UUID) | **Primary Key**. Unique MetaMatic user ID. |
+| `phoneNumber` | String | User's phone number in E.164 format. |
+| `stravaUserId` | Number | The user's unique numeric ID from Strava. |
+| `stravaRefreshToken`| String | The long-lived, encrypted token for refreshing Strava access. |
+| `stravaTokenExpiresAt`| Number | The Unix timestamp for when the current access token expires. |
+| `selectedVoiceId` | String | The identifier for the user's chosen voice style. |
 | `status` | String | The user's account status (e.g., `ACTIVE`, `INACTIVE`). |
-| `created_at` | String (ISO 8601)| Timestamp of account creation. |
-| `updated_at` | String (ISO 8601)| Timestamp of the last profile modification. |
+| `createdAt` | String (ISO 8601)| Timestamp of account creation. |
+| `updatedAt` | String (ISO 8601)| Timestamp of the last profile modification. |
 
 ---
 
